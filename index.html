@@ -25,36 +25,39 @@
 		<div class="menu">
 			<ul class="list-inline">
 				<li class="list-inline-item"><a href="#"
-					ng-click="estagio = true; raeno = false">REGISTRAR ESTÁGIO</a></li>
+					ng-click="tela_estagio = true; tela_raeno = false">REGISTRAR
+						ESTÁGIO</a></li>
 				<li class="list-inline-item"><a href="#"
-					ng-click="raeno = true; estagio = false">RAENO</a></li>
+					ng-click="tela_raeno = true; tela_estagio = false">RAENO</a></li>
 			</ul>
 		</div>
-		<div ng-show="estagio" ng-controller="EstagioCtrl">
-			<ul class="nav nav-pills">
-				<li ng-class="{ active : menuAtivo == 'dados_estagio'}"><a
-					id="dados_estagio" href="#" ng-click="navegar($event)">Dados do
-						estágio</a></li>
-				<li ng-class="{ active : menuAtivo == 'concedente'}"><a
-					id="concedente" href="#" ng-click="navegar($event)">Concedente</a></li>
-				<li ng-class="{ active : menuAtivo == 'pae'}"><a id="pae"
-					href="#" ng-click="navegar($event)">Programa de atividades de
-						estágio</a></li>
-				<li ng-class="{ active : menuAtivo == 'informacoes_pessoais'}">
-					<a id="informacoes_pessoais" href="#" ng-click="navegar($event)">Informações
-						pessoais</a>
-				</li>
-			</ul>
-			<div class="conteiner-formulario"
-				ng-show="menuAtivo == 'dados_estagio'">
-				<div class="alert alert-info">
-					<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
-					Nesta tela são informados os dados gerais do estágio, como
-					professor orientador, dados do pagamento da bolsa, seguro, etc.
-					<hr>
-					Campos marcados com * são obrigatórios.
-				</div>
-				<form class="form-horizontal" action="/action_page.php">
+		<div ng-if="tela_estagio" ng-controller="EstagioCtrl">
+
+			<form class="form-horizontal" action="/action_page.php">
+				<ul class="nav nav-pills">
+					<li ng-class="{ active : menuAtivo == 'dados_estagio'}"><a
+						id="dados_estagio" href="#" ng-click="navegar($event)">Dados
+							do estágio</a></li>
+					<li ng-class="{ active : menuAtivo == 'concedente'}"><a
+						id="concedente" href="#" ng-click="navegar($event)">Concedente</a></li>
+					<li ng-class="{ active : menuAtivo == 'pae'}"><a id="pae"
+						href="#" ng-click="navegar($event)">Programa de atividades de
+							estágio</a></li>
+					<li ng-class="{ active : menuAtivo == 'informacoes_pessoais'}">
+						<a id="informacoes_pessoais" href="#" ng-click="navegar($event)">Informações
+							pessoais</a>
+					</li>
+				</ul>
+				<div class="conteiner-formulario"
+					ng-show="menuAtivo == 'dados_estagio'">
+					<div class="alert alert-info">
+						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+						Nesta tela são informados os dados gerais do estágio, como
+						professor orientador, dados do pagamento da bolsa, seguro, etc.
+						<hr>
+						Campos marcados com * são obrigatórios.
+					</div>
+
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="obrigatorio">Estágio
 							obrigatório *</label>
@@ -99,16 +102,15 @@
 							<input type="text" ng-model="disciplina"
 								typeahead-on-select="selecionarDisciplina($item, $model, $label, $event)"
 								uib-typeahead="disc for disc in disciplinas | filter:$viewValue"
-								class="form-control">
-							<br ng-if="estagio.disciplinas.length > 0">
+								class="form-control"> <br
+								ng-if="estagio.disciplinas.length > 0">
 							<div class="input-group"
-								ng-repeat="disc in estagio.disciplinas track by $index" >
-								<input type="text" 
-									class="form-control" 
-									ng-value="disc"
+								ng-repeat="disc in estagio.disciplinas track by $index">
+								<input type="text" class="form-control" ng-value="disc"
 									ng-disabled="true">
 								<div class="input-group-btn">
-									<button class="btn btn-danger" type="button" ng-click="removerDisciplina($index)">
+									<button class="btn btn-danger" type="button"
+										ng-click="removerDisciplina($index)">
 										<i class="glyphicon glyphicon-remove"></i>
 									</button>
 								</div>
@@ -117,7 +119,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-3" for="orientador">Professor orientador *</label>
+						<label class="control-label col-sm-3" for="orientador">Professor
+							orientador *</label>
 						<div class="col-sm-9">
 							<input type="text" ng-model="estagio.professor_orientador"
 								typeahead-on-select="selecionarOrientador($item, $model, $label, $event)"
@@ -128,33 +131,302 @@
 					<div class="form-group" ng-if="estagio.professor_orientador">
 						<label class="control-label col-sm-3" for="orientador">Departamento</label>
 						<div class="col-sm-9">
-							<input ng-if="departamentoOrientador" type="text" class="form-control" ng-value="departamentoOrientador" ng-disabled="true">
+							<input ng-if="departamentoOrientador" type="text"
+								class="form-control" ng-value="departamentoOrientador"
+								ng-disabled="true">
 						</div>
 					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="agente">Agente
+							de integração</label>
+						<div class="col-sm-9">
+							<select class="form-control">
+								<option>Fundação Carlos Jofre do Amaral - FCJA - LAGES-SC</option>
+								<option>Estágio Sul Recursos Humanos LTDA ME - PORTO ALEGRE-RS</option>
+								<option>Centro de Integração Empresa Escola de Santa Catarina (CIEE/SC) - FLORIANOPOLIS-SC</option>
+							</select>
+						</div>
+					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="valor-bolsa">Valor
+							da bolsa *</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control">
+						</div>
+					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="responsavel-pagamento">Responsável
+							pelo pagamento *</label>
+						<div class="col-sm-9">
+							<select class="form-control">
+								<option>UFSC</option>
+								<option>A Marlene</option>
+								<option>A prefeitura</option>
+								<option>O povo brasileiro</option>
+							</select>
+						</div>
+					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="transporte">Auxílio
+							tranporte *</label>
+						<div class="col-sm-9">
+							<select class="form-control">
+								<option>Sim, por favor</option>
+								<option>Moro perto, não preciso</option>
+								<option>Quero</option>
+							</select>
+						</div>
+					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="transporte">Responsável
+							pelo pagamento do seguro *</label>
+						<div class="col-sm-9">
+							<select class="form-control">
+								<option>Concedente</option>
+								<option>UFSC</option>
+								<option>Agente de integração</option>
+							</select>
+						</div>
+					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="seguradora">Seguradora
+							*</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
 
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="cnpj-seguradora">CNPJ
+							da seguradora *</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
 
-
-
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="apolice">Número
+							da apólice *</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
 
 
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-9">
-							<button type="submit" class="btn btn-default">Submit</button>
+						<div class="col-sm-12 text-right">
+							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-primary"
+								ng-click="navegar(null, 'concedente')">Próximo</button>
 						</div>
 					</div>
-				</form>
-			</div>
-			<div ng-show="menuAtivo == 'concedente'"></div>
-			<div ng-show="menuAtivo == 'pae'"></div>
-			<div ng-show="menuAtivo == 'informacoes_pessoais'"></div>
+				</div>
+				<div class="conteiner-formulario"
+					ng-show="menuAtivo == 'concedente'">
+					<div class="alert alert-info">
+						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+						Concedente é a entidade (empresa, órgão público, hospital, escola,
+						ONG, etc...) que oferece vagas de estágio. Estudantes, portanto,
+						estagiam nas concedentes. Para que uma concedente possa receber
+						estagiários da UFSC ela precisa ter um convênio com a UFSC.
+						<hr>
+						Campos marcados com * são obrigatórios.
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estagio-ufsc">Estágio
+							realizado na UFSC *</label>
+						<div class="col-sm-9">
+							<label class="radio-inline"><input type="radio"
+								name="estagio-na-ufsc">Sim</label> <label class="radio-inline"><input
+								type="radio" name="estagio-na-ufsc" checked="checked">Não</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="empresa-concedente">Empresa
+							concedente *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3"
+							for="representante-concedente">Representante da
+							concedente *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="local">Local *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="nome-supervisor">Nome
+							supervisor *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="cpf-supervisor">CPF
+							do supervisor *</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="profissao-supervisor">Profissão
+							do supervisor *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12 text-right">
+							<button type="button" class="btn btn-primary"
+								ng-click="navegar(null, 'dados_estagio')">Anterior</button>
+							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-primary"
+								ng-click="navegar(null, 'pae')">Próximo</button>
+						</div>
+					</div>
+				</div>
+				<div class="conteiner-formulario" ng-show="menuAtivo == 'pae'">
+					<div class="alert alert-info">
+						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+						Nesta seção devem ser informados os dados do programa de estágio,
+						como por exemplo as atividades que você irá realizar.
+						<hr>
+						Campos marcados com * são obrigatórios.
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="titulo-pae">Título
+							*</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="atividades-pae">Atividades
+							*</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" rows="7"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12 text-right">
+							<button type="button" class="btn btn-primary"
+								ng-click="navegar(null, 'concedente')">Anterior</button>
+							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-primary"
+								ng-click="navegar(null, 'informacoes_pessoais')">Próximo</button>
+						</div>
+					</div>
+				</div>
+				<div class="conteiner-formulario"
+					ng-show="menuAtivo == 'informacoes_pessoais'">
+					<div class="alert alert-info">
+						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+						Nesta seção devem ser informados os dados seus dados pessoais,
+						como data de nascimento, endereço, etc.
+						<hr>
+						Campos marcados com * são obrigatórios.
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="cpf-estagiario">CPF
+							*</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3"
+							for="data-nascimento-estagiario">Data de nascimento *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="email-estagiario">Email
+							*</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="cep-estagiario">CEP
+							*</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="endereco-estagiario">Endereço
+							*</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="estado-estagiario">Estado
+							*</label>
+						<div class="col-sm-9">
+							<select class="form-control">
+								<option>Santa Catarina</option>
+								<option>São Paulo</option>
+								<option>Rio de Janeiro</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="cidade-estagiario">Cidade
+							*</label>
+						<div class="col-sm-9">
+							<select class="form-control">
+								<option>Florianópolis</option>
+								<option>São Paulo</option>
+								<option>Realengo</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12 text-right">
+							<button type="button" class="btn btn-primary"
+								ng-click="navegar(null, 'pae')">Anterior</button>
+							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-primary" ng-click="">Salvar
+								e enviar</button>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
-		<div ng-show="raeno">raeno</div>
+		<div ng-show="tela_raeno">raeno</div>
 
 	</div>
 

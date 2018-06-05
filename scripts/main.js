@@ -2,9 +2,9 @@ var siare = angular.module("siare", ['ngAnimate', 'ngSanitize', 'ui.bootstrap'])
 
 siare.run(function($rootScope) {
 	
-	$rootScope.estagio = false;
+	$rootScope.tela_estagio = false;
 	
-	$rootScope.raeno = false;
+	$rootScope.tela_raeno = false;
 	
 });
 
@@ -37,8 +37,12 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 		{nome:'Felippe Freire', departamento:'INE'}
 	];
 	
-	$scope.navegar = function(evento) {
-		$scope.menuAtivo = evento.target.id;
+	$scope.navegar = function(evento, aba) {
+		var destino = aba;
+		if (evento) {
+			destino = evento.target.id;
+		}
+		$scope.menuAtivo = destino;
 	}
 	
 	$scope.selecionarDisciplina = function($item, $model, $label, $event) {
