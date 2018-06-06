@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SIARE - Sistema de Informação para Acompanhamento e Registro de Estágios</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,8 +13,10 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
-<script
-	src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script
+            src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.min.js"></script>
 <script src="scripts/main.js"></script>
 </head>
 <body ng-app="siare">
@@ -22,6 +24,9 @@
 		<img alt="UFSC" src="images/ufsc-header.png">
 	</div>
 	<div class="container">
+        <div class="page-header">
+            <h3>Sistema de Informação para Acompanhamento e Registro de Estágios</h3>
+        </div>
 		<div class="menu">
 			<ul class="list-inline">
 				<li class="list-inline-item"><a href="#"
@@ -30,9 +35,9 @@
 				<li class="list-inline-item"><a href="#"
 					ng-click="tela_raeno = true; tela_estagio = false">RAENO</a></li>
 			</ul>
+            <hr>
 		</div>
-		<div ng-if="tela_estagio" ng-controller="EstagioCtrl">
-
+		<div ng-if="tela_estagio" ng-controller="EstagioCtrl" ng-init="init()">
 			<form class="form-horizontal" action="/action_page.php">
 				<ul class="nav nav-pills">
 					<li ng-class="{ active : menuAtivo == 'dados_estagio'}"><a
@@ -48,6 +53,16 @@
 							pessoais</a>
 					</li>
 				</ul>
+
+                <div ng-show="dadosSalvos" class="conteiner-formulario">
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" ng-click="dadosSalvos = false" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
+                        Dados salvos com sucesso.
+                    </div>
+                </div>
 				<div class="conteiner-formulario"
 					ng-show="menuAtivo == 'dados_estagio'">
 					<div class="alert alert-info">
@@ -62,37 +77,68 @@
 						<label class="control-label col-sm-3" for="obrigatorio">Estágio
 							obrigatório *</label>
 						<div class="col-sm-9">
-							<label class="radio-inline"><input type="radio"
-								name="obrigatorio">Sim</label> <label class="radio-inline"><input
-								type="radio" name="obrigatorio" checked="checked">Não</label>
+							<label class="radio-inline"><input type="radio" value="sim" ng-model="estagio.obrigatorio"
+								name="obrigatorio">Sim</label>
+                            <label class="radio-inline"><input type="radio" value="nao" ng-model="estagio.obrigatorio"
+                                name="obrigatorio" checked="checked">Não</label>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="data-inicio">Data
 							de início *</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control">
+						<div class="col-sm-4">
+							<p class="input-group">
+								<input type="text"
+									   class="form-control"
+									   uib-datepicker-popup="dd/MM/yyyy"
+									   ng-model="estagio.data_inicio"
+                                       show-button-bar="false"
+									   is-open="datInicioAberta"
+									   ng-required="true"
+									   close-text="Fechar" />
+								<span class="input-group-btn">
+            						<button type="button" class="btn btn-default"
+											ng-click="datInicioAberta = !datInicioAberta">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+							</p>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="data-termino">Data
 							de término *</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control">
+						<div class="col-sm-4">
+                            <p class="input-group">
+                                <input type="text"
+                                       class="form-control"
+                                       uib-datepicker-popup="dd/MM/yyyy"
+                                       ng-model="estagio.data_termino"
+                                       show-button-bar="false"
+                                       is-open="datTerminoAberta"
+                                       ng-required="true"
+                                       close-text="Fechar" />
+                                <span class="input-group-btn">
+            						<button type="button" class="btn btn-default"
+                                            ng-click="datTerminoAberta = !datTerminoAberta">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+                            </p>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="horas-semanais">Total
 							de horas semanais *</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.horas_semanais" type="text" class="form-control">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="horas-diarias">Total
 							de horas diárias *</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.horas_diarias" type="text" class="form-control">
 						</div>
 					</div>
 					<div class="form-group">
@@ -141,7 +187,7 @@
 						<label class="control-label col-sm-3" for="agente">Agente
 							de integração</label>
 						<div class="col-sm-9">
-							<select class="form-control">
+							<select class="form-control" ng-model="estagio.agente_integracao">
 								<option>Fundação Carlos Jofre do Amaral - FCJA - LAGES-SC</option>
 								<option>Estágio Sul Recursos Humanos LTDA ME - PORTO ALEGRE-RS</option>
 								<option>Centro de Integração Empresa Escola de Santa Catarina (CIEE/SC) - FLORIANOPOLIS-SC</option>
@@ -153,7 +199,7 @@
 						<label class="control-label col-sm-3" for="valor-bolsa">Valor
 							da bolsa *</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control">
+							<input  ng-model="estagio.valor_bolsa"type="text" class="form-control">
 						</div>
 					</div>
 
@@ -161,7 +207,7 @@
 						<label class="control-label col-sm-3" for="responsavel-pagamento">Responsável
 							pelo pagamento *</label>
 						<div class="col-sm-9">
-							<select class="form-control">
+							<select class="form-control" ng-model="estagio.responsavel_pagamento">
 								<option>UFSC</option>
 								<option>A Marlene</option>
 								<option>A prefeitura</option>
@@ -174,7 +220,7 @@
 						<label class="control-label col-sm-3" for="transporte">Auxílio
 							tranporte *</label>
 						<div class="col-sm-9">
-							<select class="form-control">
+							<select class="form-control" ng-model="estagio.auxilio_transporte">
 								<option>Sim, por favor</option>
 								<option>Moro perto, não preciso</option>
 								<option>Quero</option>
@@ -186,7 +232,7 @@
 						<label class="control-label col-sm-3" for="transporte">Responsável
 							pelo pagamento do seguro *</label>
 						<div class="col-sm-9">
-							<select class="form-control">
+							<select class="form-control" ng-model="estagio.responsavel_pagamento_transporte">
 								<option>Concedente</option>
 								<option>UFSC</option>
 								<option>Agente de integração</option>
@@ -198,7 +244,7 @@
 						<label class="control-label col-sm-3" for="seguradora">Seguradora
 							*</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.seguradora" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -206,7 +252,7 @@
 						<label class="control-label col-sm-3" for="cnpj-seguradora">CNPJ
 							da seguradora *</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.cnpj_seguradora" ui-mask="99.999.999/9999-99" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -214,14 +260,14 @@
 						<label class="control-label col-sm-3" for="apolice">Número
 							da apólice *</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.numero_apolice" type="text" class="form-control">
 						</div>
 					</div>
 
 
 					<div class="form-group">
 						<div class="col-sm-12 text-right">
-							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
 							<button type="button" class="btn btn-primary"
 								ng-click="navegar(null, 'concedente')">Próximo</button>
 						</div>
@@ -243,9 +289,10 @@
 						<label class="control-label col-sm-3" for="estagio-ufsc">Estágio
 							realizado na UFSC *</label>
 						<div class="col-sm-9">
-							<label class="radio-inline"><input type="radio"
-								name="estagio-na-ufsc">Sim</label> <label class="radio-inline"><input
-								type="radio" name="estagio-na-ufsc" checked="checked">Não</label>
+							<label class="radio-inline"><input type="radio" value="sim" ng-model="estagio.na_ufsc"
+								name="estagio-na-ufsc">Sim</label>
+                            <label class="radio-inline"><input type="radio" value="nao" ng-model="estagio.na_ufsc"
+                                name="estagio-na-ufsc" checked="checked">Não</label>
 						</div>
 					</div>
 
@@ -253,7 +300,7 @@
 						<label class="control-label col-sm-3" for="empresa-concedente">Empresa
 							concedente *</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.nome_concedente" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -262,21 +309,21 @@
 							for="representante-concedente">Representante da
 							concedente *</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.representante_concedente" type="text" class="form-control">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="local">Local *</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.local_estagio" type="text" class="form-control">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-3" for="nome-supervisor">Nome
 							supervisor *</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.nome_supervisor" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -284,7 +331,7 @@
 						<label class="control-label col-sm-3" for="cpf-supervisor">CPF
 							do supervisor *</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.cpf_supervisor" ui-mask="999.999.999-99" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -292,7 +339,7 @@
 						<label class="control-label col-sm-3" for="profissao-supervisor">Profissão
 							do supervisor *</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.profissao_supervisor" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -300,7 +347,7 @@
 						<div class="col-sm-12 text-right">
 							<button type="button" class="btn btn-primary"
 								ng-click="navegar(null, 'dados_estagio')">Anterior</button>
-							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
 							<button type="button" class="btn btn-primary"
 								ng-click="navegar(null, 'pae')">Próximo</button>
 						</div>
@@ -319,7 +366,7 @@
 						<label class="control-label col-sm-3" for="titulo-pae">Título
 							*</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.titulo_pae" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -327,14 +374,14 @@
 						<label class="control-label col-sm-3" for="atividades-pae">Atividades
 							*</label>
 						<div class="col-sm-9">
-							<textarea class="form-control" rows="7"></textarea>
+							<textarea ng-model="estagio.ativudades_pae" class="form-control" rows="7"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12 text-right">
 							<button type="button" class="btn btn-primary"
 								ng-click="navegar(null, 'concedente')">Anterior</button>
-							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
 							<button type="button" class="btn btn-primary"
 								ng-click="navegar(null, 'informacoes_pessoais')">Próximo</button>
 						</div>
@@ -354,7 +401,7 @@
 						<label class="control-label col-sm-3" for="cpf-estagiario">CPF
 							*</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.cpf_estagiario" ui-mask="999.999.999-99" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -362,7 +409,7 @@
 						<label class="control-label col-sm-3"
 							for="data-nascimento-estagiario">Data de nascimento *</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.data_nascimento_estagiario" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -370,7 +417,7 @@
 						<label class="control-label col-sm-3" for="email-estagiario">Email
 							*</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.email_estagiario" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -378,7 +425,7 @@
 						<label class="control-label col-sm-3" for="cep-estagiario">CEP
 							*</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.cep_estagiario" ui-mask="99999-999" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -386,7 +433,7 @@
 						<label class="control-label col-sm-3" for="endereco-estagiario">Endereço
 							*</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control">
+							<input ng-model="estagio.endereco_estagiario" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -394,7 +441,7 @@
 						<label class="control-label col-sm-3" for="estado-estagiario">Estado
 							*</label>
 						<div class="col-sm-9">
-							<select class="form-control">
+							<select class="form-control" ng-model="estagio.estado_estagiario">
 								<option>Santa Catarina</option>
 								<option>São Paulo</option>
 								<option>Rio de Janeiro</option>
@@ -406,7 +453,7 @@
 						<label class="control-label col-sm-3" for="cidade-estagiario">Cidade
 							*</label>
 						<div class="col-sm-9">
-							<select class="form-control">
+							<select class="form-control" ng-model="estagio.cidade_estagiario">
 								<option>Florianópolis</option>
 								<option>São Paulo</option>
 								<option>Realengo</option>
@@ -418,7 +465,7 @@
 						<div class="col-sm-12 text-right">
 							<button type="button" class="btn btn-primary"
 								ng-click="navegar(null, 'pae')">Anterior</button>
-							<button type="button" class="btn btn-default">Salvar</button>
+							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
 							<button type="button" class="btn btn-primary" ng-click="">Salvar
 								e enviar</button>
 						</div>

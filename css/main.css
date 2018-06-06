@@ -12,9 +12,10 @@ html, body {
 
 .menu {
 	margin-top: 15px;
-	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .conteiner-formulario {
-	padding-top:30px;
+	padding-top:20px;
 }

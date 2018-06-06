@@ -1,4 +1,4 @@
-var siare = angular.module("siare", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+var siare = angular.module("siare", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui.mask']);
 
 siare.run(function($rootScope) {
 	
@@ -11,15 +11,10 @@ siare.run(function($rootScope) {
 siare.controller("EstagioCtrl", function($rootScope, $scope) {
 	
 	const DADOS_ESTAGIO = "dados_estagio";
-	const CONCEDENTE = "concedente";
-	const PAE = "pae";
-	const INFORMACOES_PESSOAIS = "informacoes_pessoais";
-	
+
+	$scope.dadosSalvos = false;
 	$scope.menuAtivo = DADOS_ESTAGIO;
-	
-	$scope.estagio = {};
-	$scope.estagio.disciplinas = [];
-	
+
 	$scope.disciplinas = [
 		'Banco de Dados I',
 		'Banco de Dados II',
@@ -36,6 +31,11 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 		{nome:'Nelson Mandela da Silva', departamento:'INE'},
 		{nome:'Felippe Freire', departamento:'INE'}
 	];
+
+	$scope.init = function() {
+        $scope.estagio = {};
+        $scope.estagio.disciplinas = [];
+	}
 	
 	$scope.navegar = function(evento, aba) {
 		var destino = aba;
@@ -56,6 +56,11 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 	
 	$scope.selecionarOrientador = function($item, $model, $label, $event) {
 		$scope.departamentoOrientador = $item.departamento;
+	}
+
+	$scope.salvar = function(dados) {
+		$scope.dadosSalvos = angular.copy(dados);
+		//$scope.init();
 	}
 	
 });
