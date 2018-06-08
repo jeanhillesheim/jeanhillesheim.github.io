@@ -19,3 +19,7 @@ html, body {
 .conteiner-formulario {
 	padding-top:20px;
 }
+
+.tamanho-tooltip {
+	width: 450px;
+}

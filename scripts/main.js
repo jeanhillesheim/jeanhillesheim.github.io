@@ -14,6 +14,11 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 
 	$scope.dadosSalvos = false;
 	$scope.menuAtivo = DADOS_ESTAGIO;
+	$scope.ajudaSupervisor          = 'Nome do profissional responsável por supervisionar suas atividades de estágio na empresa concedente';
+    $scope.ajudaLocal               = 'Local ou setor da empresa onde você realizará seu estágio';
+    $scope.ajudaAgenteIntegracao    = 'São empresas ou instituições que auxiliam os estudantes a encontrar estágio';
+    $scope.ajudaProfOrientador      = 'Você deve indicar um professor da UFSC que será responsável por orientá-lo no seu estágio';
+    $scope.ajudaDisciplinas         = 'Indique uma ou mais disciplinas relacionadas com as atividades do seu estágio';
 
 	$scope.disciplinas = [
 		'Banco de Dados I',
@@ -34,6 +39,8 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 
 	$scope.init = function() {
         $scope.estagio = {};
+        $scope.estagio.obrigatorio = 'nao';
+        $scope.estagio.na_ufsc = 'sim';
         $scope.estagio.disciplinas = [];
 	}
 	
@@ -46,12 +53,16 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 	}
 	
 	$scope.selecionarDisciplina = function($item, $model, $label, $event) {
+        $scope.formEstagio.disciplinas.$setValidity("required", true);
 		$scope.estagio.disciplinas.push($item);
 		$scope.disciplina = "";
 	}
 	
 	$scope.removerDisciplina = function($index) {
 		$scope.estagio.disciplinas.splice($index, 1);
+        if ($scope.estagio.disciplinas.length ===  0) {
+            $scope.formEstagio.disciplinas.$setValidity("required", false);
+        }
 	}
 	
 	$scope.selecionarOrientador = function($item, $model, $label, $event) {
@@ -62,6 +73,16 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 		$scope.dadosSalvos = angular.copy(dados);
 		//$scope.init();
 	}
+
+	$scope.salvarEEnviar = function(dados) {
+        if ($scope.estagio.disciplinas.length ===  0) {
+            $scope.formEstagio.disciplinas.$setValidity("required", false);
+        }
+	    $scope.formEstagio.$setSubmitted();
+	    if ($scope.formEstagio.$valid) {
+	        $scope.dadosEnviados = true;
+        }
+    }
 	
 });
 
