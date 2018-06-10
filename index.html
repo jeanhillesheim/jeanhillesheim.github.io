@@ -1,566 +1,801 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>SIARE - Sistema de Informação para Acompanhamento e Registro de Estágios</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/main.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <meta charset="UTF-8">
+
+    <title>SIARE - Sistema de Informação para Acompanhamento e Registro de Estágios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
     <script
             src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
     <script
             src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.min.js"></script>
-<script src="scripts/main.js"></script>
+    <script src="scripts/main.js"></script>
 </head>
 <body ng-app="siare">
-	<div class="header">
-		<img alt="UFSC" src="images/ufsc-header.png">
-	</div>
-	<div class="container">
-        <div class="page-header">
-            <h3>Sistema de Informação para Acompanhamento e Registro de Estágios</h3>
-        </div>
-		<div class="menu">
-			<ul class="list-inline">
-				<li class="list-inline-item"><a href="#"
-					ng-click="tela_estagio = true; tela_raeno = false">REGISTRAR
-						ESTÁGIO</a></li>
-				<li class="list-inline-item"><a href="#"
-					ng-click="tela_raeno = true; tela_estagio = false">RAENO</a></li>
-			</ul>
-            <hr>
-		</div>
-		<div ng-if="tela_estagio" ng-controller="EstagioCtrl" ng-init="init()">
-			<form class="form-horizontal" name="formEstagio">
-				<ul class="nav nav-pills">
-					<li ng-class="{ active : menuAtivo == 'dados_estagio'}"><a
-						id="dados_estagio" href="#" ng-click="navegar($event)">Dados
-							do estágio</a></li>
-					<li ng-class="{ active : menuAtivo == 'concedente'}"><a
-						id="concedente" href="#" ng-click="navegar($event)">Concedente</a></li>
-					<li ng-class="{ active : menuAtivo == 'pae'}"><a id="pae"
-						href="#" ng-click="navegar($event)">Programa de atividades de
-							estágio</a></li>
-					<li ng-class="{ active : menuAtivo == 'informacoes_pessoais'}">
-						<a id="informacoes_pessoais" href="#" ng-click="navegar($event)">Informações
-							pessoais</a>
-					</li>
-				</ul>
+<div class="header">
+    <img alt="UFSC" src="images/ufsc-header.png">
+</div>
+<div class="container">
+    <div class="page-header">
+        <h3>Sistema de Informação para Acompanhamento e Registro de Estágios</h3>
+    </div>
+    <div class="menu">
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#"
+                ng-click="tela_estagio = true; tela_raeno = false">REGISTRAR ESTÁGIO</a></li>
+            <li class="list-inline-item"><a href="#"
+                ng-click="tela_raeno = true; tela_estagio = false">RAENO</a></li>
+        </ul>
+        <hr>
+    </div>
+    <div ng-if="tela_estagio" ng-controller="EstagioCtrl" ng-init="init()">
+        <form class="form-horizontal" name="formEstagio">
+            <ul class="nav nav-pills">
+                <li ng-class="{ active : menuAtivo == 'dados_estagio'}"><a
+                        id="dados_estagio" href="#" ng-click="navegar($event)">Dados
+                    do estágio</a></li>
+                <li ng-class="{ active : menuAtivo == 'concedente'}"><a
+                        id="concedente" href="#" ng-click="navegar($event)">Concedente</a></li>
+                <li ng-class="{ active : menuAtivo == 'pae'}"><a id="pae"
+                                                                 href="#" ng-click="navegar($event)">Programa de
+                    atividades de
+                    estágio</a></li>
+                <li ng-class="{ active : menuAtivo == 'informacoes_pessoais'}">
+                    <a id="informacoes_pessoais" href="#" ng-click="navegar($event)">Informações
+                        pessoais</a>
+                </li>
+            </ul>
 
-                <div ng-show="dadosSalvos" class="conteiner-formulario">
-                    <div class="alert alert-success" role="alert">
-                        <button type="button" class="close" ng-click="dadosSalvos = false" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
-                        Dados salvos com sucesso.
-                    </div>
+            <div ng-show="dadosSalvos" class="conteiner-formulario">
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" ng-click="dadosSalvos = false" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
+                    Dados salvos com sucesso.
+                </div>
+            </div>
+
+            <div ng-show="dadosEnviados" class="conteiner-formulario">
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" ng-click="dadosSalvos = false" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
+                    Dados enviados com sucesso. Você receberá um email assim que o seu coordenador avaliar os dados.
+                </div>
+            </div>
+
+            <div ng-show="formEstagio.$submitted && formEstagio.$invalid" class="conteiner-formulario">
+                <div class="alert alert-danger" role="alert">
+                    <i class="glyphicon glyphicon-warning-sign" aria-hidden="true"></i>
+                    Existem campos obrigatórios não preenchidos.
+                </div>
+            </div>
+            <div class="conteiner-formulario"
+                 ng-show="menuAtivo == 'dados_estagio'">
+                <div class="alert alert-info">
+                    <i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+                    Nesta tela são informados os dados gerais do estágio, como
+                    professor orientador, dados do pagamento da bolsa, seguro, etc.
+                    <hr>
+                    Campos marcados com * são obrigatórios.
                 </div>
 
-                <div ng-show="dadosEnviados" class="conteiner-formulario">
-                    <div class="alert alert-success" role="alert">
-                        <button type="button" class="close" ng-click="dadosSalvos = false" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
-                        Dados enviados com sucesso. Você receberá um email assim que o seu coordenador avaliar os dados.
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.obrigatorio.$invalid}">
+                    <label class="control-label col-sm-3" for="obrigatorio">Estágio
+                        obrigatório *</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" value="sim" ng-model="estagio.obrigatorio"
+                                                           name="obrigatorio" required>Sim</label>
+                        <label class="radio-inline"><input type="radio" value="nao" ng-model="estagio.obrigatorio"
+                                                           name="obrigatorio" required checked="checked">Não</label>
                     </div>
                 </div>
-
-                <div ng-show="formEstagio.$submitted && formEstagio.$invalid" class="conteiner-formulario">
-                    <div class="alert alert-danger" role="alert">
-                        <i class="glyphicon glyphicon-warning-sign" aria-hidden="true"></i>
-                        Existem campos obrigatórios não preenchidos.
-                    </div>
-                </div>
-				<div class="conteiner-formulario"
-					ng-show="menuAtivo == 'dados_estagio'">
-					<div class="alert alert-info">
-						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
-						Nesta tela são informados os dados gerais do estágio, como
-						professor orientador, dados do pagamento da bolsa, seguro, etc.
-						<hr>
-						Campos marcados com * são obrigatórios.
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.obrigatorio.$invalid}">
-						<label class="control-label col-sm-3" for="obrigatorio">Estágio
-							obrigatório *</label>
-						<div class="col-sm-9">
-							<label class="radio-inline"><input type="radio" value="sim" ng-model="estagio.obrigatorio"
-								name="obrigatorio" required>Sim</label>
-                            <label class="radio-inline"><input type="radio" value="nao" ng-model="estagio.obrigatorio"
-                                name="obrigatorio" required checked="checked">Não</label>
-						</div>
-					</div>
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_inicio.$invalid}">
-						<label class="control-label col-sm-3" for="data-inicio">Data
-							de início *</label>
-						<div class="col-sm-4">
-							<p class="input-group">
-								<input type="text"
-									   class="form-control"
-									   uib-datepicker-popup="dd/MM/yyyy"
-									   ng-model="estagio.data_inicio"
-                                       show-button-bar="false"
-									   is-open="datInicioAberta"
-									   ng-required="true"
-									   close-text="Fechar"
-                                       name="data_inicio"
-                                       required />
-								<span class="input-group-btn">
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_inicio.$invalid}">
+                    <label class="control-label col-sm-3" for="data-inicio">Data
+                        de início *</label>
+                    <div class="col-sm-4">
+                        <p class="input-group">
+                            <input type="text"
+                                   class="form-control"
+                                   uib-datepicker-popup="dd/MM/yyyy"
+                                   ng-model="estagio.data_inicio"
+                                   show-button-bar="false"
+                                   is-open="datInicioAberta"
+                                   ng-required="true"
+                                   close-text="Fechar"
+                                   name="data_inicio"
+                                   required/>
+                            <span class="input-group-btn">
             						<button type="button" class="btn btn-default"
-											ng-click="datInicioAberta = !datInicioAberta">
+                                            ng-click="datInicioAberta = !datInicioAberta">
 										<i class="glyphicon glyphicon-calendar"></i>
 									</button>
 								</span>
-							</p>
-						</div>
-					</div>
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_fim.$invalid}">
-						<label class="control-label col-sm-3" for="data-termino">Data
-							de término *</label>
-						<div class="col-sm-4">
-                            <p class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       uib-datepicker-popup="dd/MM/yyyy"
-                                       ng-model="estagio.data_termino"
-                                       show-button-bar="false"
-                                       is-open="datTerminoAberta"
-                                       ng-required="true"
-                                       close-text="Fechar"
-                                       name="data_fim"
-                                       required />
-                                <span class="input-group-btn">
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_fim.$invalid}">
+                    <label class="control-label col-sm-3" for="data-termino">Data
+                        de término *</label>
+                    <div class="col-sm-4">
+                        <p class="input-group">
+                            <input type="text"
+                                   class="form-control"
+                                   uib-datepicker-popup="dd/MM/yyyy"
+                                   ng-model="estagio.data_termino"
+                                   show-button-bar="false"
+                                   is-open="datTerminoAberta"
+                                   ng-required="true"
+                                   close-text="Fechar"
+                                   name="data_fim"
+                                   required/>
+                            <span class="input-group-btn">
             						<button type="button" class="btn btn-default"
                                             ng-click="datTerminoAberta = !datTerminoAberta">
 										<i class="glyphicon glyphicon-calendar"></i>
 									</button>
 								</span>
-                            </p>
-						</div>
-					</div>
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.horas_semanais.$invalid}">
-						<label class="control-label col-sm-3" for="horas-semanais">Total
-							de horas semanais *</label>
-						<div class="col-sm-2">
-							<input ng-model="estagio.horas_semanais" name="horas_semanais" type="text" class="form-control" required>
-						</div>
-					</div>
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.horas_diarias.$invalid}">
-						<label class="control-label col-sm-3" for="horas-diarias">Total
-							de horas diárias *</label>
-						<div class="col-sm-2">
-							<input ng-model="estagio.horas_diarias" name="horas_diarias" type="text" class="form-control" required>
-						</div>
-					</div>
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.disciplinas.$invalid}">
-						<label class="control-label col-sm-3" for="disciplinas">Disciplinas
-							relacionadas *</label>
-						<div class="col-sm-9">
-                            <div class="input-group">
-                                <input type="text" ng-model="disciplina"
-                                       typeahead-on-select="selecionarDisciplina($item, $model, $label, $event)"
-                                       uib-typeahead="disc for disc in disciplinas | filter:$viewValue"
-                                       name="disciplinas"
-                                       placeholder="Digite o nome da disciplina"
-                                       class="form-control"> <br
-                                    ng-if="estagio.disciplinas.length > 0">
-                                <div class="input-group-btn">
-                                    <button uib-tooltip="{{ajudaDisciplinas}}"
-                                            tooltip-class="tamanho-tooltip"
-                                            tooltip-placement="top-left"
-                                            class="btn btn-default"
-                                            type="button">
-                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                    </button>
-                                </div>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.horas_semanais.$invalid}">
+                    <label class="control-label col-sm-3" for="horas-semanais">Total
+                        de horas semanais *</label>
+                    <div class="col-sm-2">
+                        <input ng-model="estagio.horas_semanais" name="horas_semanais" type="text" class="form-control"
+                               required>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.horas_diarias.$invalid}">
+                    <label class="control-label col-sm-3" for="horas-diarias">Total
+                        de horas diárias *</label>
+                    <div class="col-sm-2">
+                        <input ng-model="estagio.horas_diarias" name="horas_diarias" type="text" class="form-control"
+                               required>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.disciplinas.$invalid}">
+                    <label class="control-label col-sm-3" for="disciplinas">Disciplinas
+                        relacionadas *</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input type="text" ng-model="disciplina"
+                                   typeahead-on-select="selecionarDisciplina($item, $model, $label, $event)"
+                                   uib-typeahead="disc for disc in disciplinas | filter:$viewValue"
+                                   name="disciplinas"
+                                   placeholder="Digite o nome da disciplina"
+                                   class="form-control"> <br
+                                ng-if="estagio.disciplinas.length > 0">
+                            <div class="input-group-btn">
+                                <button uib-tooltip="{{ajudaDisciplinas}}"
+                                        tooltip-class="tamanho-tooltip"
+                                        tooltip-placement="top-left"
+                                        class="btn btn-default"
+                                        type="button">
+                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                </button>
                             </div>
+                        </div>
 
-							<div class="input-group"
-								ng-repeat="disc in estagio.disciplinas track by $index">
-								<input type="text" class="form-control" ng-value="disc"
-									ng-disabled="true">
-								<div class="input-group-btn">
-									<button class="btn btn-danger" type="button"
-										ng-click="removerDisciplina($index)">
-										<i class="glyphicon glyphicon-remove"></i>
-									</button>
-								</div>
-							</div>
+                        <div class="input-group"
+                             ng-repeat="disc in estagio.disciplinas track by $index">
+                            <input type="text" class="form-control" ng-value="disc"
+                                   ng-disabled="true">
+                            <div class="input-group-btn">
+                                <button class="btn btn-danger" type="button"
+                                        ng-click="removerDisciplina($index)">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </div>
+                        </div>
 
-						</div>
-					</div>
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.professor_orientador.$invalid}">
-						<label class="control-label col-sm-3" for="orientador">Professor
-							orientador *</label>
-						<div class="col-sm-9">
-                            <div class="input-group">
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.professor_orientador.$invalid}">
+                    <label class="control-label col-sm-3" for="orientador">Professor
+                        orientador *</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input type="text"
+                                   ng-model="estagio.professor_orientador"
+                                   typeahead-on-select="selecionarOrientador($item, $model, $label, $event)"
+                                   uib-typeahead="prof.nome for prof in professores | filter:$viewValue"
+                                   name="professor_orientador"
+                                   placeholder="Digite o nome do professor orientador do seu estágio"
+                                   class="form-control" required>
+                            <div class="input-group-btn">
+
+                                <button uib-tooltip="{{ajudaProfOrientador}}"
+                                        tooltip-class="tamanho-tooltip"
+                                        tooltip-placement="top-left"
+                                        class="btn btn-default"
+                                        type="button">
+                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="estagio.professor_orientador">
+                    <label class="control-label col-sm-3" for="orientador">Departamento</label>
+                    <div class="col-sm-9">
+                        <input ng-if="departamentoOrientador" type="text"
+                               class="form-control" ng-value="departamentoOrientador"
+                               ng-disabled="true">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="agente">Agente
+                        de integração</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <select class="form-control" ng-model="estagio.agente_integracao">
+                                <option>Fundação Carlos Jofre do Amaral - FCJA - LAGES-SC</option>
+                                <option>Estágio Sul Recursos Humanos LTDA ME - PORTO ALEGRE-RS</option>
+                                <option>Centro de Integração Empresa Escola de Santa Catarina (CIEE/SC) -
+                                    FLORIANOPOLIS-SC
+                                </option>
+                            </select>
+                            <div class="input-group-btn">
+
+                                <button uib-tooltip="{{ajudaAgenteIntegracao}}"
+                                        tooltip-class="tamanho-tooltip"
+                                        tooltip-placement="top-left"
+                                        class="btn btn-default"
+                                        type="button">
+                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.valor.$invalid}">
+                    <label class="control-label col-sm-3" for="valor-bolsa">Valor
+                        da bolsa *</label>
+                    <div class="col-sm-2">
+                        <input ng-model="estagio.valor_bolsa" type="text" class="form-control" name="valor" required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.responsavel_pagto.$invalid}">
+                    <label class="control-label col-sm-3" for="responsavel-pagamento">Responsável
+                        pelo pagamento *</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="estagio.responsavel_pagamento" name="responsavel_pagto"
+                                required>
+                            <option>UFSC</option>
+                            <option>A Marlene</option>
+                            <option>A prefeitura</option>
+                            <option>O povo brasileiro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.auxilio_transporte.$invalid}">
+                    <label class="control-label col-sm-3" for="transporte">Auxílio
+                        tranporte *</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="estagio.auxilio_transporte" name="auxilio_transporte"
+                                required>
+                            <option>Sim, por favor</option>
+                            <option>Moro perto, não preciso</option>
+                            <option>Quero</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.responsavel_pagto_auxilio.$invalid}">
+                    <label class="control-label col-sm-3" for="transporte">Responsável
+                        pelo pagamento do seguro *</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="estagio.responsavel_pagamento_transporte"
+                                name="responsavel_pagto_auxilio" required>
+                            <option>Concedente</option>
+                            <option>UFSC</option>
+                            <option>Agente de integração</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.seguradora.$invalid}">
+                    <label class="control-label col-sm-3" for="seguradora">Seguradora
+                        *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.seguradora" type="text" class="form-control" name="seguradora"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cnpj_seguradora.$invalid}">
+                    <label class="control-label col-sm-3" for="cnpj-seguradora">CNPJ
+                        da seguradora *</label>
+                    <div class="col-sm-3">
+                        <input ng-model="estagio.cnpj_seguradora" ui-mask="99.999.999/9999-99" name="cnpj_seguradora"
+                               type="text" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.num_apolice.$invalid}">
+                    <label class="control-label col-sm-3" for="apolice">Número
+                        da apólice *</label>
+                    <div class="col-sm-3">
+                        <input ng-model="estagio.numero_apolice" type="text" name="num_apolice" class="form-control"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="navegar(null, 'concedente')">Próximo
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="conteiner-formulario"
+                 ng-show="menuAtivo == 'concedente'">
+                <div class="alert alert-info">
+                    <i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+                    Concedente é a entidade (empresa, órgão público, hospital, escola,
+                    ONG, etc...) que oferece vagas de estágio. Estudantes, portanto,
+                    estagiam nas concedentes. Para que uma concedente possa receber
+                    estagiários da UFSC ela precisa ter um convênio com a UFSC.
+                    <hr>
+                    Campos marcados com * são obrigatórios.
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.estagio_na_ufsc.$invalid}">
+                    <label class="control-label col-sm-3" for="estagio-ufsc">Estágio
+                        realizado na UFSC *</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" value="sim" ng-model="estagio.na_ufsc"
+                                                           name="estagio_na_ufsc" required>Sim</label>
+                        <label class="radio-inline"><input type="radio" value="nao" ng-model="estagio.na_ufsc"
+                                                           name="estagio_na_ufsc" checked="checked" required>Não</label>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.concedente.$invalid}">
+                    <label class="control-label col-sm-3" for="empresa-concedente">Empresa
+                        concedente *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.nome_concedente" name="concedente" type="text" class="form-control"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.representante_concedente.$invalid}">
+                    <label class="control-label col-sm-3"
+                           for="representante-concedente">Representante da
+                        concedente *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.representante_concedente" name="representante_concedente" type="text"
+                               class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.local.$invalid}">
+                    <label class="control-label col-sm-3" for="local">Local *</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input ng-model="estagio.local_estagio" name="local" type="text" class="form-control"
+                                   required>
+
+                            <div class="input-group-btn">
+                                <button uib-tooltip="{{ajudaLocal}}"
+                                        tooltip-class="tamanho-tooltip"
+                                        tooltip-placement="top-left"
+                                        class="btn btn-default"
+                                        type="button">
+                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.nome_supervisor.$invalid}">
+                    <label class="control-label col-sm-3" for="nome-supervisor">Nome
+                        supervisor *</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input ng-model="estagio.nome_supervisor" name="nome_supervisor" type="text"
+                                   class="form-control" required>
+
+                            <div class="input-group-btn">
+                                <button uib-tooltip="{{ajudaSupervisor}}"
+                                        tooltip-class="tamanho-tooltip"
+                                        tooltip-placement="top-left"
+                                        class="btn btn-default"
+                                        type="button">
+                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cpf_supervisor.$invalid}">
+                    <label class="control-label col-sm-3" for="cpf-supervisor">CPF
+                        do supervisor *</label>
+                    <div class="col-sm-3">
+                        <input ng-model="estagio.cpf_supervisor" ui-mask="999.999.999-99" name="cpf_supervisor"
+                               type="text" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.profissao_supervisor.$invalid}">
+                    <label class="control-label col-sm-3" for="profissao-supervisor">Profissão
+                        do supervisor *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.profissao_supervisor" name="prifissao_supervisor" type="text"
+                               class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-primary"
+                                ng-click="navegar(null, 'dados_estagio')">Anterior
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="navegar(null, 'pae')">Próximo
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="conteiner-formulario" ng-show="menuAtivo == 'pae'">
+                <div class="alert alert-info">
+                    <i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+                    Nesta seção devem ser informados os dados do programa de estágio,
+                    como por exemplo as atividades que você irá realizar.
+                    <hr>
+                    Campos marcados com * são obrigatórios.
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.titulo_estagio.$invalid}">
+                    <label class="control-label col-sm-3" for="titulo-pae">Título
+                        *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.titulo_pae" name="titulo_estagio" type="text" class="form-control"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.atividades_estagio.$invalid}">
+                    <label class="control-label col-sm-3" for="atividades-pae">Atividades
+                        *</label>
+                    <div class="col-sm-9">
+                        <textarea ng-model="estagio.ativudades_pae" name="atividades_estagio" class="form-control"
+                                  rows="7" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-primary"
+                                ng-click="navegar(null, 'concedente')">Anterior
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="navegar(null, 'informacoes_pessoais')">Próximo
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="conteiner-formulario"
+                 ng-show="menuAtivo == 'informacoes_pessoais'">
+                <div class="alert alert-info">
+                    <i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+                    Nesta seção devem ser informados os dados seus dados pessoais,
+                    como data de nascimento, endereço, etc.
+                    <hr>
+                    Campos marcados com * são obrigatórios.
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cpf_estagiario.$invalid}">
+                    <label class="control-label col-sm-3" for="cpf-estagiario">CPF
+                        *</label>
+                    <div class="col-sm-3">
+                        <input ng-model="estagio.cpf_estagiario" ui-mask="999.999.999-99" name="cpf_estagiario"
+                               type="text" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_nasc.$invalid}">
+                    <label class="control-label col-sm-3"
+                           for="data-nascimento-estagiario">Data de nascimento *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.data_nascimento_estagiario" name="data_nasc" type="text"
+                               class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.email.$invalid}">
+                    <label class="control-label col-sm-3" for="email-estagiario">Email
+                        *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.email_estagiario" name="email" type="text" class="form-control"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cep.$invalid}">
+                    <label class="control-label col-sm-3" for="cep-estagiario">CEP
+                        *</label>
+                    <div class="col-sm-3">
+                        <input ng-model="estagio.cep_estagiario" name="cep" ui-mask="99999-999" type="text"
+                               class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.endereco.$invalid}">
+                    <label class="control-label col-sm-3" for="endereco-estagiario">Endereço
+                        *</label>
+                    <div class="col-sm-9">
+                        <input ng-model="estagio.endereco_estagiario" name="endereco" type="text" class="form-control"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.estado.$invalid}">
+                    <label class="control-label col-sm-3" for="estado-estagiario">Estado
+                        *</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="estagio.estado_estagiario" name="estado" required>
+                            <option>Santa Catarina</option>
+                            <option>São Paulo</option>
+                            <option>Rio de Janeiro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cidade.$invalid}">
+                    <label class="control-label col-sm-3" for="cidade-estagiario">Cidade
+                        *</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="estagio.cidade_estagiario" name="cidade" required>
+                            <option>Florianópolis</option>
+                            <option>São Paulo</option>
+                            <option>Realengo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-primary"
+                                ng-click="navegar(null, 'pae')">Anterior
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
+                        <button type="button" class="btn btn-primary" ng-click="salvarEEnviar(estagio)">Salvar
+                            e enviar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-show="tela_raeno" ng-controller="RaenoCtrl" ng-init="init()">
+        <form class="form-horizontal" name="formRaeno">
+
+            <ul class="nav nav-pills">
+                <li ng-class="{ active : menuAtivo == 'info_raeno'}"><a
+                        id="info_raeno" href="#" ng-click="navegar($event)">Informações do Raeno</a></li>
+                <li ng-class="{ active : menuAtivo == 'recesso'}"><a
+                        id="recesso" href="#" ng-click="navegar($event)">Período de recesso</a></li>
+                </li>
+            </ul>
+            <div class="conteiner-formulario">
+                <div class="alert alert-info">
+                    <i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
+                    Selecione a opção de recesso que se encaixe com seu caso.
+                    <hr>
+                    Campos marcados com * são obrigatórios.
+                </div>
+
+                <div ng-show="menuAtivo == 'recesso'">
+                    <div class="form-group"
+                         ng-class="{'has-error' : formRaeno.$submitted && formRaeno.periodo_recesso_usufruido.$invalid}">
+                        <label class="control-label col-sm-3" for="obrigatorio">&nbsp;</label>
+                        <div class="col-sm-9">
+                            <label class="radio-inline"><input type="radio" value="sim" ng-model="raeno.recessoUsufruido"
+                                                               name="periodo_recesso_usufruido" required>Período de recesso usufruído</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error' : false}">
+                        <label class="control-label col-sm-3" for="data-inicio2">De *</label>
+                        <div class="col-sm-4">
+                            <p class="input-group">
                                 <input type="text"
-                                    ng-model="estagio.professor_orientador"
-                                    typeahead-on-select="selecionarOrientador($item, $model, $label, $event)"
-                                    uib-typeahead="prof.nome for prof in professores | filter:$viewValue"
-                                    name="professor_orientador"
-                                    placeholder="Digite o nome do professor orientador do seu estágio"
-                                    class="form-control" required>
-                                <div class="input-group-btn">
+                                       class="form-control"
+                                       uib-datepicker-popup="dd/MM/yyyy"
+                                       ng-model="estagio.data_inicio2"
+                                       show-button-bar="false"
+                                       is-open="datRecessoInicioAberta"
+                                       ng-required="true"
+                                       close-text="Fechar"
+                                       name="data_recesso_usufruido_inicio"
+                                       required/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        ng-click="datRecessoInicioAberta = !datRecessoInicioAberta">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                            </p>
+                        </div>
+                    </div>
 
-                                    <button uib-tooltip="{{ajudaProfOrientador}}"
-                                            tooltip-class="tamanho-tooltip"
-                                            tooltip-placement="top-left"
-                                            class="btn btn-default"
-                                            type="button">
-                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                    </button>
-                                </div>
-                            </div>
-						</div>
-					</div>
-					<div class="form-group" ng-if="estagio.professor_orientador">
-						<label class="control-label col-sm-3" for="orientador">Departamento</label>
-						<div class="col-sm-9">
-							<input ng-if="departamentoOrientador" type="text"
-								class="form-control" ng-value="departamentoOrientador"
-								ng-disabled="true">
-						</div>
-					</div>
+                    <div class="form-group" ng-class="{'has-error' : false}">
+                        <label class="control-label col-sm-3" for="data-termino2">Até *</label>
+                        <div class="col-sm-4">
+                            <p class="input-group">
+                                <input type="text"
+                                       class="form-control"
+                                       uib-datepicker-popup="dd/MM/yyyy"
+                                       ng-model="estagio.data_termino2"
+                                       show-button-bar="false"
+                                       is-open="datRecessoTerminoAberta"
+                                       ng-required="true"
+                                       close-text="Fechar"
+                                       name="data_recesso_usufruido_fim"
+                                       required/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        ng-click="datRecessoTerminoAberta = !datRecessoTerminoAberta">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                            </p>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label class="control-label col-sm-3" for="agente">Agente
-							de integração</label>
-						<div class="col-sm-9">
-                            <div class="input-group">
-                                <select class="form-control" ng-model="estagio.agente_integracao">
-                                    <option>Fundação Carlos Jofre do Amaral - FCJA - LAGES-SC</option>
-                                    <option>Estágio Sul Recursos Humanos LTDA ME - PORTO ALEGRE-RS</option>
-                                    <option>Centro de Integração Empresa Escola de Santa Catarina (CIEE/SC) - FLORIANOPOLIS-SC</option>
-                                </select>
-                                <div class="input-group-btn">
+                    <div class="form-group"
+                         ng-class="{'has-error' : false}">
+                        <label class="control-label col-sm-3" for="obrigatorio">&nbsp;</label>
+                        <div class="col-sm-9">
+                            <label class="radio-inline"><input type="radio" value="sim" ng-model="raeno.recessoUsufruido"
+                                                               name="periodo_recesso_pago">Período de recesso pago em dinheiro</label>
+                        </div>
+                    </div>
 
-                                    <button uib-tooltip="{{ajudaAgenteIntegracao}}"
-                                            tooltip-class="tamanho-tooltip"
-                                            tooltip-placement="top-left"
-                                            class="btn btn-default"
-                                            type="button">
-                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                    </button>
-                                </div>
-                            </div>
-						</div>
-					</div>
+                    <div class="form-group" ng-class="{'has-error' : false}">
+                        <label class="control-label col-sm-3" for="obrigatorio">&nbsp;</label>
+                        <div class="col-sm-9">
+                            <label class="radio-inline"><input type="radio" value="sim" ng-model="estagio.obrigatorio"
+                                                               name="periodo_recesso_usuafruido_e_pago">Período de recesso usufruído e pago em dinheiro</label>
+                        </div>
+                    </div>
 
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.valor.$invalid}">
-						<label class="control-label col-sm-3" for="valor-bolsa">Valor
-							da bolsa *</label>
-						<div class="col-sm-2">
-							<input  ng-model="estagio.valor_bolsa"type="text" class="form-control" name="valor" required>
-						</div>
-					</div>
+                    <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.valor.$invalid}">
+                        <label class="control-label col-sm-3" for="valor-bolsa">Quantidade de dias pago *</label>
+                        <div class="col-sm-2">
+                            <input ng-model="estagio.valor_bolsa" type="text" class="form-control" name="valor" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_inicio1.$invalid}">
+                        <label class="control-label col-sm-3" for="data-inicio1">Período usufruído de *</label>
+                        <div class="col-sm-4">
+                            <p class="input-group">
+                                <input type="text"
+                                       class="form-control"
+                                       uib-datepicker-popup="dd/MM/yyyy"
+                                       ng-model="estagio.data_inicio1"
+                                       show-button-bar="false"
+                                       is-open="datInicioAberta1"
+                                       ng-required="true"
+                                       close-text="Fechar"
+                                       name="data_inicio1"
+                                       required/>
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                                ng-click="datInicioAberta1 = !datInicioAberta">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                            </p>
+                        </div>
+                    </div>
 
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.responsavel_pagto.$invalid}">
-						<label class="control-label col-sm-3" for="responsavel-pagamento">Responsável
-							pelo pagamento *</label>
-						<div class="col-sm-9">
-							<select class="form-control" ng-model="estagio.responsavel_pagamento" name="responsavel_pagto" required>
-								<option>UFSC</option>
-								<option>A Marlene</option>
-								<option>A prefeitura</option>
-								<option>O povo brasileiro</option>
-							</select>
-						</div>
-					</div>
 
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.auxilio_transporte.$invalid}">
-						<label class="control-label col-sm-3" for="transporte">Auxílio
-							tranporte *</label>
-						<div class="col-sm-9">
-							<select class="form-control" ng-model="estagio.auxilio_transporte" name="auxilio_transporte" required>
-								<option>Sim, por favor</option>
-								<option>Moro perto, não preciso</option>
-								<option>Quero</option>
-							</select>
-						</div>
-					</div>
+                    <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_fim1.$invalid}">
+                        <label class="control-label col-sm-3" for="data-termino1">Período usufruído até *</label>
+                        <div class="col-sm-4">
+                            <p class="input-group">
+                                <input type="text"
+                                       class="form-control"
+                                       uib-datepicker-popup="dd/MM/yyyy"
+                                       ng-model="estagio.data_termino1"
+                                       show-button-bar="false"
+                                       is-open="datTerminoAberta1"
+                                       ng-required="true"
+                                       close-text="Fechar"
+                                       name="data_fim1"
+                                       required/>
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                                ng-click="datTerminoAberta1 = !datTerminoAberta">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                            </p>
+                        </div>
+                    </div>
 
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.responsavel_pagto_auxilio.$invalid}">
-						<label class="control-label col-sm-3" for="transporte">Responsável
-							pelo pagamento do seguro *</label>
-						<div class="col-sm-9">
-							<select class="form-control" ng-model="estagio.responsavel_pagamento_transporte" name="responsavel_pagto_auxilio" required>
-								<option>Concedente</option>
-								<option>UFSC</option>
-								<option>Agente de integração</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.seguradora.$invalid}">
-						<label class="control-label col-sm-3" for="seguradora">Seguradora
-							*</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.seguradora" type="text" class="form-control" name="seguradora" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cnpj_seguradora.$invalid}">
-						<label class="control-label col-sm-3" for="cnpj-seguradora">CNPJ
-							da seguradora *</label>
-						<div class="col-sm-3">
-							<input ng-model="estagio.cnpj_seguradora" ui-mask="99.999.999/9999-99" name="cnpj_seguradora" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.num_apolice.$invalid}">
-						<label class="control-label col-sm-3" for="apolice">Número
-							da apólice *</label>
-						<div class="col-sm-3">
-							<input ng-model="estagio.numero_apolice" type="text" name="num_apolice" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-12 text-right">
-							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
-							<button type="button" class="btn btn-primary"
-								ng-click="navegar(null, 'concedente')">Próximo</button>
-						</div>
-					</div>
-				</div>
-				<div class="conteiner-formulario"
-					ng-show="menuAtivo == 'concedente'">
-					<div class="alert alert-info">
-						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
-						Concedente é a entidade (empresa, órgão público, hospital, escola,
-						ONG, etc...) que oferece vagas de estágio. Estudantes, portanto,
-						estagiam nas concedentes. Para que uma concedente possa receber
-						estagiários da UFSC ela precisa ter um convênio com a UFSC.
-						<hr>
-						Campos marcados com * são obrigatórios.
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.estagio_na_ufsc.$invalid}">
-						<label class="control-label col-sm-3" for="estagio-ufsc">Estágio
-							realizado na UFSC *</label>
-						<div class="col-sm-9">
-							<label class="radio-inline"><input type="radio" value="sim" ng-model="estagio.na_ufsc"
-								name="estagio_na_ufsc" required>Sim</label>
-                            <label class="radio-inline"><input type="radio" value="nao" ng-model="estagio.na_ufsc"
-                                name="estagio_na_ufsc" checked="checked" required>Não</label>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.concedente.$invalid}">
-						<label class="control-label col-sm-3" for="empresa-concedente">Empresa
-							concedente *</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.nome_concedente" name="concedente" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.representante_concedente.$invalid}">
-						<label class="control-label col-sm-3"
-							for="representante-concedente">Representante da
-							concedente *</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.representante_concedente" name="representante_concedente" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.local.$invalid}">
-						<label class="control-label col-sm-3" for="local">Local *</label>
-						<div class="col-sm-9">
-                            <div class="input-group">
-                                <input ng-model="estagio.local_estagio" name="local" type="text" class="form-control" required>
-
-                                <div class="input-group-btn">
-                                    <button uib-tooltip="{{ajudaLocal}}"
-                                        tooltip-class="tamanho-tooltip"
-                                        tooltip-placement="top-left"
-                                        class="btn btn-default"
-                                        type="button">
-                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                    </button>
-                                </div>
-                            </div>
-						</div>
-					</div>
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.nome_supervisor.$invalid}">
-						<label class="control-label col-sm-3" for="nome-supervisor">Nome
-							supervisor *</label>
-						<div class="col-sm-9">
-                            <div class="input-group">
-                                <input ng-model="estagio.nome_supervisor" name="nome_supervisor" type="text" class="form-control" required>
-
-                                <div class="input-group-btn">
-                                    <button uib-tooltip="{{ajudaSupervisor}}"
-                                        tooltip-class="tamanho-tooltip"
-                                        tooltip-placement="top-left"
-                                        class="btn btn-default"
-                                        type="button">
-                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                    </button>
-                                </div>
-                            </div>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cpf_supervisor.$invalid}">
-						<label class="control-label col-sm-3" for="cpf-supervisor">CPF
-							do supervisor *</label>
-						<div class="col-sm-3">
-							<input ng-model="estagio.cpf_supervisor" ui-mask="999.999.999-99" name="cpf_supervisor" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.profissao_supervisor.$invalid}">
-						<label class="control-label col-sm-3" for="profissao-supervisor">Profissão
-							do supervisor *</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.profissao_supervisor" name="prifissao_supervisor" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-12 text-right">
-							<button type="button" class="btn btn-primary"
-								ng-click="navegar(null, 'dados_estagio')">Anterior</button>
-							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
-							<button type="button" class="btn btn-primary"
-								ng-click="navegar(null, 'pae')">Próximo</button>
-						</div>
-					</div>
-				</div>
-				<div class="conteiner-formulario" ng-show="menuAtivo == 'pae'">
-					<div class="alert alert-info">
-						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
-						Nesta seção devem ser informados os dados do programa de estágio,
-						como por exemplo as atividades que você irá realizar.
-						<hr>
-						Campos marcados com * são obrigatórios.
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.titulo_estagio.$invalid}">
-						<label class="control-label col-sm-3" for="titulo-pae">Título
-							*</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.titulo_pae" name="titulo_estagio" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.atividades_estagio.$invalid}">
-						<label class="control-label col-sm-3" for="atividades-pae">Atividades
-							*</label>
-						<div class="col-sm-9">
-							<textarea ng-model="estagio.ativudades_pae" name="atividades_estagio" class="form-control" rows="7" required></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12 text-right">
-							<button type="button" class="btn btn-primary"
-								ng-click="navegar(null, 'concedente')">Anterior</button>
-							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
-							<button type="button" class="btn btn-primary"
-								ng-click="navegar(null, 'informacoes_pessoais')">Próximo</button>
-						</div>
-					</div>
-				</div>
-				<div class="conteiner-formulario"
-					ng-show="menuAtivo == 'informacoes_pessoais'">
-					<div class="alert alert-info">
-						<i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i>
-						Nesta seção devem ser informados os dados seus dados pessoais,
-						como data de nascimento, endereço, etc.
-						<hr>
-						Campos marcados com * são obrigatórios.
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cpf_estagiario.$invalid}">
-						<label class="control-label col-sm-3" for="cpf-estagiario">CPF
-							*</label>
-						<div class="col-sm-3">
-							<input ng-model="estagio.cpf_estagiario" ui-mask="999.999.999-99" name="cpf_estagiario" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.data_nasc.$invalid}">
-						<label class="control-label col-sm-3"
-							for="data-nascimento-estagiario">Data de nascimento *</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.data_nascimento_estagiario" name="data_nasc" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.email.$invalid}">
-						<label class="control-label col-sm-3" for="email-estagiario">Email
-							*</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.email_estagiario" name="email" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cep.$invalid}">
-						<label class="control-label col-sm-3" for="cep-estagiario">CEP
-							*</label>
-						<div class="col-sm-3">
-							<input ng-model="estagio.cep_estagiario" name="cep" ui-mask="99999-999" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.endereco.$invalid}">
-						<label class="control-label col-sm-3" for="endereco-estagiario">Endereço
-							*</label>
-						<div class="col-sm-9">
-							<input ng-model="estagio.endereco_estagiario" name="endereco" type="text" class="form-control" required>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.estado.$invalid}">
-						<label class="control-label col-sm-3" for="estado-estagiario">Estado
-							*</label>
-						<div class="col-sm-9">
-							<select class="form-control" ng-model="estagio.estado_estagiario" name="estado" required>
-								<option>Santa Catarina</option>
-								<option>São Paulo</option>
-								<option>Rio de Janeiro</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.cidade.$invalid}">
-						<label class="control-label col-sm-3" for="cidade-estagiario">Cidade
-							*</label>
-						<div class="col-sm-9">
-							<select class="form-control" ng-model="estagio.cidade_estagiario" name="cidade" required>
-								<option>Florianópolis</option>
-								<option>São Paulo</option>
-								<option>Realengo</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-12 text-right">
-							<button type="button" class="btn btn-primary"
-								ng-click="navegar(null, 'pae')">Anterior</button>
-							<button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
-							<button type="button" class="btn btn-primary" ng-click="salvarEEnviar(estagio)">Salvar
-								e enviar</button>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div ng-show="tela_raeno">raeno</div>
-
-	</div>
+                    <div class="form-group">
+                        <div class="col-sm-12 text-right">
+                            <button type="button" class="btn btn-primary"
+                                    ng-click="navegar(null, 'info_raeno')">Anterior
+                            </button>
+                            <button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
+                            <button type="button" class="btn btn-primary" ng-click="salvarEEnviar(estagio)">Salvar
+                                e enviar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="menuAtivo == 'info_raeno'">
+                <div class="form-group" ng-class="{'has-error' : formEstagio.$submitted && formEstagio.atividades_estagio.$invalid}">
+                    <label class="control-label col-sm-3" for="atividades-pae">Importância do estágio e relação com o TCC
+                        *</label>
+                    <div class="col-sm-9">
+                        <textarea ng-model="estagio.ativudades_pae" name="atividades_estagio" class="form-control" rows="7" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-default" ng-click="salvar(estagio)">Salvar</button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="navegar(null, 'recesso')">Próximo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

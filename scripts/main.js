@@ -87,5 +87,19 @@ siare.controller("EstagioCtrl", function($rootScope, $scope) {
 });
 
 siare.controller("RaenoCtrl", function($rootScope, $scope) {
-	
+
+    $scope.menuAtivo = 'info_raeno';
+
+    $scope.navegar = function(evento, aba) {
+        var destino = aba;
+        if (evento) {
+            destino = evento.target.id;
+        }
+        $scope.menuAtivo = destino;
+    }
+
+	$scope.init = function() {
+		$scope.raeno = {};
+        $scope.raeno.recessoUsufruido = 'sim';
+	}
 });
